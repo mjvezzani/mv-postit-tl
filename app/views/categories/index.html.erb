@@ -1,0 +1,9 @@
+<h2>Listing <%= @categories.length %> categories.<h2>
+
+<hr></hr>
+
+<% @categories.each do |cat| %>
+ <h4><%= cat.name %></h4>
+ <p>There are <%= cat.posts.length %> posts in this category.</p>
+  <hr></hr>
+<% end %>

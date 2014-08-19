@@ -1,0 +1,26 @@
+<h2>Profile for <%= @user.username %></h2>
+<p class='quiet'>Member since <%= @user.created_at.year %></p>
+
+<hr/>
+
+<div class='row'>
+  <div class='span6'>
+    <h3><%= @user.username %>'s Posts</h3>
+    <% @user.posts.each do |p| %>
+      <div class='well'>
+        <%= link_to p.title, post_path(p) %>
+        <p><%= p.description %></p>
+      </div>
+    <% end %>
+  </div>
+  <div class='span6'>
+    <h3><%= @user.username %>'s Comments</h3>
+    <% @user.comments.each do |c| %>
+      <div class='well'>
+        <%= c.body %>
+        <br/>
+        <span class='quiet'>on</span>  <%= link_to c.post.title, post_path(c.post) %>
+      </div>
+    <% end %>
+  </div>
+</div>

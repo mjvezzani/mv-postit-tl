@@ -1,0 +1,32 @@
+<h2>Listing Posts</h2>
+
+<hr></hr>
+
+<% @posts.each do |p| %>
+<div class='row'>
+<div class='span0'>
+  <%= link_to vote_post_path(p, vote: true), method: 'post' do %>
+    <i class='icon-arrow-up'></i>
+  <% end %>
+  <br/>
+  <%= p.votes.size %>
+  <br/>
+  <%= link_to vote_post_path(p, vote: false), method: 'post' do %>
+    <i class='icon-arrow-down'></i>
+  <% end %>
+</div>
+<div class='span8'>
+  <% if p.categories.length > 0 %>
+  <div class='well'>
+  <% p.categories.each do |c| %>
+    <%= link_to c.name, category_path(c), class: 'btn btn-small btn-danger btn-rounded' %>
+  <% end %>
+  </div>
+  <% end %>
+  <h4><%= link_to p.title, post_path(p)%></h4>
+  <p><%= p.description %></p>
+  <p><span class='quiet'>posted by</span> <%= link_to p.author.username, user_path(p.author) %> at <%= prettify_datetime(p.created_at) %></p>
+</div>
+</div>
+<hr></hr>
+<% end %>

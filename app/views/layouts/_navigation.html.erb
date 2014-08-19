@@ -1,0 +1,40 @@
+<ul class="nav">
+  <li>
+    <%= link_to "Postit!", root_path, :class => 'brand' %>
+  </li>
+</ul>
+<div class='btn-group nav_item'>
+  <%= link_to '#', class: 'btn btn-small dropdown-toggle', 'data-toggle' => 'dropdown' do %>
+    Categories <span class='caret'></span>
+  <% end %>
+  <ul class='dropdown-menu'>
+    <% Category.all.each do |category| %>
+      <li>
+        <%= link_to category.name, category_path(category) %>
+      </li>
+    <% end %>
+    <% if logged_in? %>
+      <li class='divider'></li>
+      <li>
+        <%= link_to(new_category_path) do %>
+          <i class='icon-plus'></i>
+          New Category
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+<div class='nav_item'>
+  <% if logged_in? %>
+    <%= link_to 'New Post', new_post_path, class: 'btn btn-success btn-small' %>
+  <% else %>
+    <%= link_to 'Register', register_path, class: 'btn btn-success btn-small' %>
+  <% end %>
+</div>
+<div class='nav_item'>
+<% if logged_in? %>
+    <%= link_to "Log out, #{current_user.username}", logout_path, class: 'btn btn-info btn-small' %>
+  <% else %>
+    <%= link_to 'Log in', login_path, class: 'btn btn-info nav-item btn-small' %>
+  <% end %>
+</div>

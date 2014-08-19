@@ -1,0 +1,12 @@
+<h2><%= @category.name %></h2>
+
+<h4>These are the posts associated with the <%= @category.name %> category:</h4>
+
+<hr></hr>
+
+<% @category.posts.each do |post| %>
+  <h5><%= link_to post.title, post_path(post) %></h5>
+  <p><%= post.description %></p>
+  <p><%= post.url %></p>
+  <hr></hr>
+<% end %>
