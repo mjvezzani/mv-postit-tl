@@ -4,6 +4,8 @@ class PostsController < ApplicationController
   before_action :require_user, except: [:index, :show]
   before_action :editable?, only: [:edit]
 
+  helper_method :user_can_edit?
+
   def index
     @posts = Post.all.sort_by{|x| x.total_votes}.reverse
   end
@@ -67,5 +69,9 @@ class PostsController < ApplicationController
       flash[:error] = 'You are not authorized to edit that article'
       redirect_to root_path
     end
+  end
+
+  def user_can_edit?
+    session[:user_id] == @post.author.id
   end
 end

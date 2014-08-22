@@ -1,4 +1,5 @@
 <div class='row'>
+<!-- Voting box --!>
   <div class='span0 well'>
     <% if logged_in? %>
       <%= link_to vote_post_path(@post, vote: true), method: 'post' do %>
@@ -14,6 +15,7 @@
       <% end %>
     <% end %>
   </div>
+<!-- Post box -->
   <div class='span6 well'>
     <% if @post.categories.length > 0 %>
       <% @post.categories.each do |c| %>
@@ -23,6 +25,11 @@
     <h4><%= link_to @post.title, post_path(@post)%></h4>
     <p><%= @post.description %></p>
     <p><span class='quiet'>posted by</span> <%= link_to @post.author.username, user_path(@post.author) %> at <%= prettify_datetime(@post.created_at) %></p>
+    <p>
+      <% if user_can_edit? %>
+        <%= link_to 'Edit post', edit_post_path(@post) %>
+      <% end %>
+    </p>
   </div>
 </div>
 <hr></hr>
