@@ -3,18 +3,34 @@
 
 <hr/>
 <div class='row'>
-  <div class='span6'>
+  <div class='span8'>
     <h3><%= @user.username %>'s Posts</h3>
     <%= render 'posts/posts', obj: @user.posts %>
   </div>
-  <div class='span6'>
+  <div class='span4'>
     <h3><%= @user.username %>'s Comments</h3>
     <% @user.comments.each do |c| %>
-      <div class='well'>
-        <%= c.body %>
-        <br/>
-        <span class='quiet'>on</span>  <%= link_to c.post.title, post_path(c.post) %>
+      <div class='row'>
+        <div class='span0'>
+          <% if logged_in? %>
+            <%= link_to vote_post_comment_path(c.post, c, vote: true), method: 'post' do %>
+              <i class='icon-arrow-up'></i>
+            <% end %>
+            <br/>
+            <%= c.total_votes %> votes
+            <br/>
+            <%= link_to vote_post_comment_path(c.post, c, vote: true), method: 'post' do %>
+              <i class='icon-arrow-up'></i>
+            <% end %>
+          <% end %>
+        </div>
+        <div class='span2 well'>
+          <%= c.body %>
+          <br/>
+          <span class='quiet'>on</span>  <%= link_to c.post.title, post_path(c.post) %>
+        </div>  
       </div>
+      <hr></hr>
     <% end %>
   </div>
 </div>
