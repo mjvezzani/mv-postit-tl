@@ -2,16 +2,10 @@
 <p class='quiet'>Member since <%= @user.created_at.year %></p>
 
 <hr/>
-
 <div class='row'>
   <div class='span6'>
     <h3><%= @user.username %>'s Posts</h3>
-    <% @user.posts.each do |p| %>
-      <div class='well'>
-        <%= link_to p.title, post_path(p) %>
-        <p><%= p.description %></p>
-      </div>
-    <% end %>
+    <%= render 'posts/posts', obj: @user.posts %>
   </div>
   <div class='span6'>
     <h3><%= @user.username %>'s Comments</h3>

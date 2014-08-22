@@ -2,30 +2,10 @@
 
 <hr></hr>
 
-<% if @post.categories.length > 0 %>
-<div class='well'>
-  <% @post.categories.each do |cat| %>
-    <%= link_to cat.name, category_path(cat), class: 'btn btn-small btn-danger' %>
-  <% end %>
-</div>
-<% end %>
-<h4><%= link_to "#{@post.title}", fix_url(@post.url) %></h4>
-<% if logged_in? && current_user == @post.author %>
-  <p class='pull-right'><%= link_to 'Edit post', edit_post_path(@post) %></p>
-<% end %>
-<p><%= @post.description %></p>
-<p><quiet>posted by</quiet> <%= link_to @post.author.username, user_path(@post.author) %> at <%= @post.created_at %></p>
-
-<hr></hr>
+<%= render 'post' %>
 
 <% if logged_in? %>
   <%= render 'shared/comments' %>
-
-  <hr></hr>
-
-  <% @post.comments.each do |comment| %>
-    <p><%= comment.body %></p>
-    <p><span class='quiet'>by </span><%= link_to comment.author.username, user_path(comment.author) %> <span class='quiet'>on</span> <%= prettify_datetime(comment.created_at) %></p>
-    <hr></hr>
-  <% end %>
 <% end %>
+
+<%= render 'comments' %>

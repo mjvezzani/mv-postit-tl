@@ -11,7 +11,12 @@ PostitTemplate::Application.routes.draw do
     member do
       post :vote
     end
-    resources :comments, only: [:create]
+    resources :comments, only: [:create] do
+      member do
+        post :vote
+        # /posts/:id/comments/:id/vote
+      end
+    end
   end
   resources :categories, except: :destroy
   resources :users, only: [:show, :create, :edit, :update]

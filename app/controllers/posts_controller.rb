@@ -5,11 +5,12 @@ class PostsController < ApplicationController
   before_action :editable?, only: [:edit]
 
   def index
-    @posts = Post.order(created_at: :desc)
+    @posts = Post.all.sort_by{|x| x.total_votes}.reverse
   end
 
   def show
     @comment = Comment.new
+    @post.comments.sort_by{|x| x.total_votes}.reverse
   end
 
   def new
@@ -54,7 +55,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :description, :url, :user_id)
+    params.require(:post).permit(:title, :description, :url, :user_id, category_ids: [])
   end
 
   def set_post
