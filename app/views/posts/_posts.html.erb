@@ -1,6 +1,6 @@
 <% obj.each do |p| %>
   <div class='row'>
-    <div class='span0'>
+    <div class='span0 well'>
       <% if logged_in? %>
         <%= link_to vote_post_path(p, vote: true), method: 'post' do %>
           <i class='icon-arrow-up'></i>
@@ -15,13 +15,11 @@
         <% end %>
       <% end %>
     </div>
-    <div class='span4'>
+    <div class='span6 well'>
       <% if p.categories.length > 0 %>
-        <div class='well'>
         <% p.categories.each do |c| %>
           <%= link_to c.name, category_path(c), class: 'btn btn-small btn-danger btn-rounded' %>
         <% end %>
-        </div>
       <% end %>
       <h4><%= link_to p.title, post_path(p)%></h4>
       <p><%= p.description %></p>

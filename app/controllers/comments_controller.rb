@@ -7,11 +7,13 @@ class CommentsController < ApplicationController
     @comment = @post.comments.build(params.require(:comment).permit(:body))
     @comment.author = current_user
 
-    if @comment.save
+    if @comment.valid?
+      @comment.save
       flash[:notice] = "Comment successfully added."
       redirect_to post_path(@post)
     else
-      render 'posts/show'
+      flash[:error] = 'Please submit a comment with text in it.'
+      redirect_to post_path(@post)
     end
   end
 
@@ -25,7 +27,7 @@ class CommentsController < ApplicationController
     if @vote.valid?
       flash[:notice] = 'Your vote has been counted'
     else
-      flash[:error] = 'Your vote has not been counted'
+      flash[:error] = 'You can only vote once'
     end
 
     redirect_to :back
