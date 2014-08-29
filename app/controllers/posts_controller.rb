@@ -3,7 +3,7 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :vote]
   before_action :require_user, except: [:index, :show]
   before_action :editable?, only: [:edit]
-
+  
   helper_method :user_can_edit?
 
   def index
@@ -45,13 +45,10 @@ class PostsController < ApplicationController
   def vote
     @vote = Vote.create(voteable: @post, creator: current_user, vote: params[:vote])
 
-    if @vote.valid?
-      flash[:notice] = 'Your vote has been counted'
-    else
-      flash[:error] = 'You are only allowed to vote once'
+    respond_to do |format|
+      format.html { redirect_to :back, notice: 'Your vote was counted' } 
+      format.js
     end
-
-    redirect_to :back
   end
 
   private
@@ -61,7 +58,7 @@ class PostsController < ApplicationController
   end
 
   def set_post
-    @post = Post.find(params[:id])
+    @post = Post.find_by(slug: params[:id])
   end
 
   def editable?
@@ -74,4 +71,5 @@ class PostsController < ApplicationController
   def user_can_edit?
     session[:user_id] == @post.author.id
   end
+
 end

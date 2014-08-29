@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
   before_action :require_user
 
   def create
-    @post = Post.find(params[:post_id])
+    @post = Post.find_by(slug: params[:post_id])
     @comment = @post.comments.build(params.require(:comment).permit(:body))
     @comment.author = current_user
 
@@ -21,16 +21,14 @@ class CommentsController < ApplicationController
     # it is necessary to make sure that each attribute that is passed into Vote.create()
     # is set. Otherwise you end up with blank fields in your database and are left
     # scratching your head as to why something isn't saving.
-    comment = Comment.find(params[:id])
-    @vote = Vote.create(voteable: comment, creator: current_user, vote: params[:vote])
+    @comment = Comment.find(params[:id])
+    @vote = Vote.create(voteable: @comment, creator: current_user, vote: params[:vote])
 
-    if @vote.valid?
-      flash[:notice] = 'Your vote has been counted'
-    else
-      flash[:error] = 'You can only vote once'
+    respond_to do |format|
+      format.html { redirect_to :back, notice: 'Your comment has been created' }
+      format.js
     end
 
-    redirect_to :back
   end
 
 end

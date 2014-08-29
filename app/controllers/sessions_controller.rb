@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
       redirect_to root_path
     else
       flash[:error] = "Please check your login credentials"
-      redirect_to :new
+      render :new
     end
   end
 

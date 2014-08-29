@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :require_user, only: [:show]
 
   def show
-    @user = User.find(params[:id])
+    @user = User.find_by(slug: params[:id])
   end
 
   def new
@@ -23,11 +23,11 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
+    @user = User.find_by(slug: params[:id])
   end
 
   def update
-    @user = User.find(params[:id])
+    @user = User.find_by(slug: params[:id])
 
     if @user.update(user_params)
       flash[:notice] = 'You have successfully updated your profile'
